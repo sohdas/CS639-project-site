@@ -21,22 +21,30 @@
         </div>
         <hr>
         <div class="content-main row">
+
+            <!-- Motivation -->
             <h3>Motivation</h3>
+            <br/>
             <div class="content-paragraph">
                 <p>
-                    Computers are often asked to perform simple visual tasks when they’re passed an image. For example, we might show a picture of an animal, then ask the computer “what animal is this?” or “what color is this animal?”, or even “is this animal inside, or outside?”. There are a handful of different methods computers have for performing tasks like these, but one of the most common methods being used today is called “question-answering policy”. This policy works by generating spatial maps highlighting image regions relevant to answering the question (https://arxiv.org/abs/1606.00061). Examples of this type of method is shown in the images below:
+                    Humans interpret images by looking at a handful of key points, and using that information to both “fill in” the rest of the image and to direct where they look next. Take this image for example, and notice how it directs (and predicts) your trained flow of vision:
                 </p>
             </div>
             <div class="content-graphic">
+                <figure>
+                    <img src="./resources/readthis.png" width="50%"/>
+                </figure>
             </div>
-            <div class="content-paragraph">
-                As you can see, this approach requires a map to be generated over the entire image, which is not computationally efficient. To produce similar results while improving the speed and memory usage, we decided to train a “look-around” policy that follows the same general flow that humans do when performing similar image analysis tasks, where only a subset of the original image must be analyzed.
-Unlike computers, humans are not able to process an image pixel-by-pixel, and even if they were, it wouldn’t be nearly as efficient. Instead, humans interpret images by looking at a handful of key points, and using that information to both “fill in” the rest of the image and to direct where they look next. Take this image for example, and notice how it directs (and predicts) your trained flow of vision:
-            </div>
+
             <div class="content-paragraph">
                 The largest text grabs our attention right off the bat, and from there we follow the standard top-to-bottom policy that we’re accustomed to. After we read the lowest line of text, the flow stops and we reassess the image to see if there’s anything else important that we missed. Seeing the top line that we had previously skipped over, we read that text last, and then determine that all information on this photo has been analyzed. 
 
 Another slightly “busier” example on how one group of points determines the next viewpoint can be seen in this articleexample from Bbusiness iInsider (link). The two similar images shown below are overlaid with a heat map representing the areas humans are spending time looking at, red being the areas that the test subjects looked at the most.
+            </div>
+            <div class="content-graphic">
+                <figure>
+                    <img src="./resources/advertising.png" width="70%"/>
+                </figure>
             </div>
             <div class="content-paragraph">
                 From a sales point of view, the left image is a better version of the ad. In that version, it is shown that people spend more time looking at the actual product in that image, rather that the woman. This is because as people look at the woman's face in the left image, they see that eyes are directed at something else within the frame of the image. This directs the person to next look in the same direction as the woman is out of curiosity. In the right image however, the woman’s eyes are staring directly back at the viewer rather than staying within the photo, breaking that natural flow to the product. 
@@ -44,12 +52,38 @@ Another slightly “busier” example on how one group of points determines the 
             <div class="content-paragraph">
                 Humans also interpret images differently given different identification tasks. In a study done by ___, they had one subject perform different three-minute tasks on the same image while tracking eye movementtheir eye movement was tracked. They were first given three minutes to look at the photo with no tasks given to them (1). The remaining tracking shown is when the subject was asked to (2) estimate the material circumstances of the family; (3) give the ages of the people; (4) surmise what the family had been doing before the arrival of the "unexpected visitor;" (5) remember the clothes worn by the people; (6) remember the position of the people and objects in the room; (7) estimate how long the "unexpected visitor" had been away from the family.  ( Yarbus 1967). Shown in the eye movement diagrams below, the subjects’ eyes moved to different parts of the image depending on what task they were given. Even when the subject was allowed to look freely at the image with no task in mind, we can see that the subject still didn’t look at every position of the image. Instead, they focused on the main objects in the image, and let their brain “fill in” the remaining portions. 
             </div>
-            <div class="content-paragraph">
-                These studies exemplify how humans handle image analysis much differently than the “question-answer policy” that many computers are using today. To change this, we wanted to devise a way for a computer to learn a similar “look-around policy” to be able to perform small identification tasks, as well handle image reconstruction from a limited sub-view of the original image. The largest benefit to this type of policy is that it would require much less memory to compute these identification tasks if the entire image isn’t being analyzed, and it would then be much faster as well. 
+
+            <div class="content-graphic">
+                <figure>
+                    <img src="./resources/vision.png" width="40%"/>
+                </figure>
             </div>
+
+            <div class="content-paragraph">
+                These studies exemplify how humans handle image analysis. For our semester project, we wanted to devise a way for a computer to learn a “look-around policy” similar to human image analyses which could perform small identification tasks, as well as handle image reconstruction, from a limited sub-view of the original image.We were interested to see how this type of policy would work in computer, and wanted to analyze the accuracy and speed of this method compared to other task-based policies such as “question-answering” policy.
+Question-Answering policy works by generating spatial maps highlighting image regions relevant to answering the question (<a href="https://arxiv.org/abs/1606.00061">https://arxiv.org/abs/1606.00061</a>). Examples of this type of method is shown in the images below:
+            </div>
+            <div class="content-graphic">
+                <figure>
+                    <img src="./resources/question_answering.png" width="80%"/>
+                </figure>
+            </div>
+
+            <div class="content-paragraph">
+                As you can see, this approach requires a map to be generated over the entire image, which is not computationally efficient. To produce similar results while improving the speed and memory usage, we decided to train a “look-around” policy that follows the same general flow that humans do when performing similar image analysis tasks, where only a subset of the original image must be analyzed.
+Unlike computers, humans are not able to process an image pixel-by-pixel, and even if they were, it wouldn’t be nearly as efficient. Instead, humans interpret images by looking at a handful of key points, and using that information to both “fill in” the rest of the image and to direct where they look next. Take this image for example, and notice how it directs (and predicts) your trained flow of vision:
+            </div>
+
+            <!-- Approach -->
             <h3>Approach</h3>
+            <br/>
             <div class="content-paragraph">
                 We began by looking for any existing research following this type of flow, and found “Emergence of Exploratory Look-Around Behaviors through Active Observation Completion” by Ramakrishnan et al (**SOURCE). This paper implements a similar look-around policy to reconstruct 360 degree landscape images based off of a handful of small sub-images. 
+            </div>
+            <div class="content-graphic">
+                <figure>
+                    <img src="./resources/origresults.png" width="90%"/>
+                </figure>
             </div>
             <div class="content-paragraph">
                 Their paper focused solely on image reconstruction without delving into talk-solving, but was a perfect starting point for grasping how this policy should be implemented. We initially planned to download and “tweak” their code to match our own dataset and goals, but we soon discovered that this repository was poorly documented and that their code was not compatible with our project goals. This was mainly due to their focus on multi-view and panoramic datasets, where we were planning on using human faces. We instead used this data set as more of a “rough outline”, and learned what we could about how they implemented their image reconstruction policy to influence our own policy construction.\
@@ -60,7 +94,10 @@ Another slightly “busier” example on how one group of points determines the 
             <div class="content-paragraph">
                 We decided to tackle the reconstruction task first, since the study by Ramakrishnan et al. gave us a general idea of how to implement that policy, and then move onto the task-solving policy second. If we had additional time after completing those two steps we planned to run both at once (reconstruction plus a task) and see how that affected the output. 
             </div>
+
+            <!-- Implementation -->
             <h3>Implementation</h3>
+            <br/>
             <div class="content-paragraph">
                 Our implementation used Convolutional Neural Networks along with fully connected network layers to train our classifier, so to understand the process our classifier goes through you must first understand how these processes work.
 Fully Connected (FC) Layers of a neural network take an aggregated array of data and forms classifications from it using weights. When a layer is fully connected, that means that every node of the original array is connected to every node of the “classification” array. 
@@ -78,7 +115,10 @@ A Convolutional Neural Network (CNN) is a Deep Learning algorithm which can take
                 Given a 512x512 image, a 32x32 subsection (represented by the green square) is selected and read into memory. The fully-connected CNN of this subsection is stored as a “view encoding” vector of individual attributes. This is combined with the proprioceptive input encoding, which stores information about the location of the sub image in relation to the input image as a whole. These two vectors are combined into one using concatenation, and then a fully connected layer updates the 256x1 vector we reference as the Gestalt Encoding, gestalt meaning “an organized whole that is perceived as more than the sum of its parts”.  Finally, the gestalt encoding creates both an output image (an estimate of what it believes the face looks like), and a vector of “action probabilities” which selects the next subimage to go through this sequence. The gestalt encoding as well as the action probability vectors are what is being trained, so they don’t completely refresh during each call. Instead, every run through this sequence slightly updates each of them depending on the accuracy of the final output image. 
 
             </div>
+
+            <!-- Results -->
             <h3>Results</h3>
+            <br/>
             <div class="content-paragraph">
                 images and gifs of the image reconstruction
 possibly add in images for the task-finding part of it
@@ -88,27 +128,38 @@ The figure below shows a few examples of our implementation successfully reconst
             </div>
             <div class="content-paragraph">
                 To get a better idea about how the image is updating after each sub-image, here’s how the output images of 3 women become more accurate with each sub-image selected:
-
             </div>
             <div class="content-paragraph">
                 The quality of these reconstructions for every image improves after each view is selected, suggesting that the network is meaningfully integrating information from separate views into a gestalt  representation which captures the content of the overall image.
 
             </div>
+
+            <!-- Problems -->
             <h3>Problems Encountered</h3>
+            <br/>
             <div class="content-paragraph">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque suscipit architecto eum eveniet dolorem molestiae voluptates. Temporibus, explicabo ipsam distinctio reiciendis modi, suscipit soluta possimus animi accusantium, enim ab delectus?
             </div>
+
+            <!-- Suggestions -->
             <h3>Suggestions for Future Research</h3>
+            <br/>
             <div class="content-paragraph">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque suscipit architecto eum eveniet dolorem molestiae voluptates. Temporibus, explicabo ipsam distinctio reiciendis modi, suscipit soluta possimus animi accusantium, enim ab delectus?
             </div>
+
+            <!-- Citations -->
             <h3>Citations</h3>
+            <br/>
             <div class="content-paragraph">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque suscipit architecto eum eveniet dolorem molestiae voluptates. Temporibus, explicabo ipsam distinctio reiciendis modi, suscipit soluta possimus animi accusantium, enim ab delectus?
+                <ul>
+                    <li>
+                        Ramakrishnan, S. K., Jayaraman, D., & Grauman, K. (2019). Emergence of exploratory look-
+                        around behaviors through active observation completion. Science Robotics, 4(30).
+                        &nbsp; [doi:10.1126/scirobotics.aaw6326]
+                    </li>
+                </ul>
             </div>
-        </div>
-        <div class="footer">
-    
         </div>
     </div>
 </body>
