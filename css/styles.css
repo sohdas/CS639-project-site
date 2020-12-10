@@ -2,6 +2,7 @@
 .body-wrapper {
     margin-left: 15%;
     margin-right: 15%;
+    margin-bottom: 64px;
 }
 
 html {
@@ -20,9 +21,19 @@ html {
 
 .content-graphic {
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
 }
 
+.content-graphic img {
+    border-radius: 5px;
+    -webkit-box-shadow: 5px 5px 15px -3px rgba(0,0,0,0.6); 
+    box-shadow: 5px 5px 15px -3px rgba(0,0,0,0.6);
+}
 .content-paragraph {
     text-indent: 2em;
+}
+
+.content-header {
+    text-align: left;
+    font-size: 36px;
 }

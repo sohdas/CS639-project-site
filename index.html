@@ -13,14 +13,14 @@
         <div class="header row">
             <div class="header-text col-xs">
                 <h1>Learning to Look Around</h1>
-                <h3>CS 639 Final Project - Declan Campbell, Robin Stauffer, Soham Dasgupta</h3>
+                <h6>UW-Madison CS 639 Final Project<br/>Declan Campbell, Robin Stauffer, Soham Dasgupta</h3>
             </div>
         </div>
         <hr>
         <div class="content-main row">
 
             <!-- Motivation -->
-            <h3>Motivation</h3>
+            <h3 class="content-header">Our Motivation</h3>
             <br/>
             <div class="content-paragraph">
                 <p>
@@ -40,7 +40,7 @@ Another slightly “busier” example on how one group of points determines the 
             </div>
             <div class="content-graphic">
                 <figure>
-                    <img src="./resources/advertising.png" width="70%"/>
+                    <img src="./resources/eyetracking.png" width="70%"/>
                 </figure>
             </div>
             <div class="content-paragraph">
@@ -72,7 +72,7 @@ Unlike computers, humans are not able to process an image pixel-by-pixel, and ev
             </div>
 
             <!-- Approach -->
-            <h3>Approach</h3>
+            <h3 class="content-header">Approach</h3>
             <br/>
             <div class="content-paragraph">
                 We began by looking for any existing research following this type of flow, and found “Emergence of Exploratory Look-Around Behaviors through Active Observation Completion” by Ramakrishnan et al (**SOURCE). This paper implements a similar look-around policy to reconstruct 360 degree landscape images based off of a handful of small sub-images. 
@@ -93,12 +93,12 @@ Unlike computers, humans are not able to process an image pixel-by-pixel, and ev
             </div>
 
             <!-- Implementation -->
-            <h3>Implementation</h3>
+            <h3 class="content-header">Implementation</h3>
             <br/>
             <div class="content-paragraph">
                 Our implementation used Convolutional Neural Networks along with fully connected network layers to train our classifier, so to understand the process our classifier goes through you must first understand how these processes work.
-<em>Fully Connected (FC) Layers</em> of a neural network take an aggregated array of data and forms classifications from it using weights. When a layer is fully connected, that means that every node of the original array is connected to every node of the “classification” array. 
-A <em>Convolutional Neural Network (CNN)</em> is a Deep Learning algorithm which can take in an input image, assign importance (learnable weights and biases) to various aspects/objects in the image and be able to differentiate one from the other (source)”. Shown below is a simplified version of a CNN.
+<b>Fully Connected (FC) Layers</b> of a neural network take an aggregated array of data and forms classifications from it using weights. When a layer is fully connected, that means that every node of the original array is connected to every node of the “classification” array. 
+A <b>Convolutional Neural Network (CNN)</b> is a Deep Learning algorithm which can take in an input image, assign importance (learnable weights and biases) to various aspects/objects in the image and be able to differentiate one from the other (source)”. Shown below is a simplified version of a CNN.
             </div>
             <div class="content-graphic">
                 <figure>
@@ -124,7 +124,7 @@ A <em>Convolutional Neural Network (CNN)</em> is a Deep Learning algorithm which
             </div>
 
             <!-- Results -->
-            <h3>Results</h3>
+            <h3 class="content-header">Results</h3>
             <br/>
             <div class="content-paragraph">
                 images and gifs of the image reconstruction
@@ -152,21 +152,21 @@ The figure below shows a few examples of our implementation successfully reconst
             </div>
 
             <!-- Problems -->
-            <h3>Problems Encountered</h3>
+            <h3 class="content-header">Problems Encountered</h3>
             <br/>
             <div class="content-paragraph">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque suscipit architecto eum eveniet dolorem molestiae voluptates. Temporibus, explicabo ipsam distinctio reiciendis modi, suscipit soluta possimus animi accusantium, enim ab delectus?
             </div>
 
             <!-- Suggestions -->
-            <h3>Suggestions for Future Research</h3>
+            <h3 class="content-header">Suggestions for Future Research</h3>
             <br/>
             <div class="content-paragraph">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque suscipit architecto eum eveniet dolorem molestiae voluptates. Temporibus, explicabo ipsam distinctio reiciendis modi, suscipit soluta possimus animi accusantium, enim ab delectus?
             </div>
 
             <!-- Citations -->
-            <h3>Citations</h3>
+            <h3 class="content-header">Citations</h3>
             <br/>
             <div class="content-paragraph">
                 <ul>
@@ -177,6 +177,7 @@ The figure below shows a few examples of our implementation successfully reconst
                     </li>
                 </ul>
             </div>
+            <hr/>
         </div>
     </div>
 </body>
