@@ -11,10 +11,7 @@
 <body>
     <div class="body-wrapper container">
         <div class="header row">
-            <div class="header-image col-sm-auto">
-                <img src="./resources/color-UWcrest-print.png" width="100px"/>
-            </div>
-            <div class="header-text col-lg-auto">
+            <div class="header-text col-xs">
                 <h1>Learning to Look Around</h1>
                 <h3>CS 639 Final Project - Declan Campbell, Robin Stauffer, Soham Dasgupta</h3>
             </div>
@@ -32,14 +29,14 @@
             </div>
             <div class="content-graphic">
                 <figure>
-                    <img src="./resources/readthis.png" width="50%"/>
+                    <img src="./resources/readthis.png" width="70%"/>
                 </figure>
             </div>
 
             <div class="content-paragraph">
                 The largest text grabs our attention right off the bat, and from there we follow the standard top-to-bottom policy that we’re accustomed to. After we read the lowest line of text, the flow stops and we reassess the image to see if there’s anything else important that we missed. Seeing the top line that we had previously skipped over, we read that text last, and then determine that all information on this photo has been analyzed. 
 
-Another slightly “busier” example on how one group of points determines the next viewpoint can be seen in this articleexample from Bbusiness iInsider (link). The two similar images shown below are overlaid with a heat map representing the areas humans are spending time looking at, red being the areas that the test subjects looked at the most.
+Another slightly “busier” example on how one group of points determines the next viewpoint can be seen in this articleexample from Business Insider (link). The two similar images shown below are overlaid with a heat map representing the areas humans are spending time looking at, red being the areas that the test subjects looked at the most.
             </div>
             <div class="content-graphic">
                 <figure>
@@ -86,7 +83,7 @@ Unlike computers, humans are not able to process an image pixel-by-pixel, and ev
                 </figure>
             </div>
             <div class="content-paragraph">
-                Their paper focused solely on image reconstruction without delving into talk-solving, but was a perfect starting point for grasping how this policy should be implemented. We initially planned to download and “tweak” their code to match our own dataset and goals, but we soon discovered that this repository was poorly documented and that their code was not compatible with our project goals. This was mainly due to their focus on multi-view and panoramic datasets, where we were planning on using human faces. We instead used this data set as more of a “rough outline”, and learned what we could about how they implemented their image reconstruction policy to influence our own policy construction.\
+                Their paper focused solely on image reconstruction without delving into talk-solving, but was a perfect starting point for grasping how this policy should be implemented. We initially planned to download and “tweak” their code to match our own dataset and goals, but we soon discovered that this repository was poorly documented and that their code was not compatible with our project goals. This was mainly due to their focus on multi-view and panoramic datasets, where we were planning on using human faces. We instead used this data set as more of a “rough outline”, and learned what we could about how they implemented their image reconstruction policy to influence our own policy construction.
             </div>
             <div class="content-paragraph">
                 We chose a large dataset of celebrity faces. We determined that this would be the perfect dataset for our project for a number of reasons. Faces, we determined, would be relatively simple to train on because of the number of similarities across each picture. Every face will have the same general shape, 2 eyes, a nose, and a mouth. In the landscape reconstruction study, the dataset proved to be difficult to train on, partly due to the lack of consistency across each photo. They had to go through a number of additional steps for the training algorithm to produce accurate results. To avoid that trouble, we chose a dataset that has a number of similarities across each image, but still has noticeable variation face-to-face. Additionally, there are many simple tasks that can be determined by looking at a face alone (i.e. eye color, smiling face vs frowning face, necklace vs no necklace), and this data set was very easy to use since it was publicly available and easily accessible.
@@ -100,8 +97,13 @@ Unlike computers, humans are not able to process an image pixel-by-pixel, and ev
             <br/>
             <div class="content-paragraph">
                 Our implementation used Convolutional Neural Networks along with fully connected network layers to train our classifier, so to understand the process our classifier goes through you must first understand how these processes work.
-Fully Connected (FC) Layers of a neural network take an aggregated array of data and forms classifications from it using weights. When a layer is fully connected, that means that every node of the original array is connected to every node of the “classification” array. 
-A Convolutional Neural Network (CNN) is a Deep Learning algorithm which can take in an input image, assign importance (learnable weights and biases) to various aspects/objects in the image and be able to differentiate one from the other (source)”. Shown below is a simplified version of a CNN. (image source)
+<em>Fully Connected (FC) Layers</em> of a neural network take an aggregated array of data and forms classifications from it using weights. When a layer is fully connected, that means that every node of the original array is connected to every node of the “classification” array. 
+A <em>Convolutional Neural Network (CNN)</em> is a Deep Learning algorithm which can take in an input image, assign importance (learnable weights and biases) to various aspects/objects in the image and be able to differentiate one from the other (source)”. Shown below is a simplified version of a CNN.
+            </div>
+            <div class="content-graphic">
+                <figure>
+                    <img src="./resources/cnn.png" width="90%"/>
+                </figure>
             </div>
             <div class="content-paragraph">
                 This example shows an input image going through a number of convolution and pooling steps in order to represent the large photo as a much smaller matrix of learned features. This matrix is then flattened to an array, and then a fully connected layer is applied to get an array with each node corresponding to a different quality such as healthy, alarm, or danger. We used CNNs for their ability to condense a sub-image into a vector of qualitative attributes.
@@ -110,6 +112,11 @@ A Convolutional Neural Network (CNN) is a Deep Learning algorithm which can take
 
                 Shown below is the custom model architecture used in our implementation:
                 
+            </div>
+            <div class="content-graphic">
+                <figure>
+                    <img src="./resources/architecture.png" width="70%"/>
+                </figure>
             </div>
             <div class="content-paragraph">
                 Given a 512x512 image, a 32x32 subsection (represented by the green square) is selected and read into memory. The fully-connected CNN of this subsection is stored as a “view encoding” vector of individual attributes. This is combined with the proprioceptive input encoding, which stores information about the location of the sub image in relation to the input image as a whole. These two vectors are combined into one using concatenation, and then a fully connected layer updates the 256x1 vector we reference as the Gestalt Encoding, gestalt meaning “an organized whole that is perceived as more than the sum of its parts”.  Finally, the gestalt encoding creates both an output image (an estimate of what it believes the face looks like), and a vector of “action probabilities” which selects the next subimage to go through this sequence. The gestalt encoding as well as the action probability vectors are what is being trained, so they don’t completely refresh during each call. Instead, every run through this sequence slightly updates each of them depending on the accuracy of the final output image. 
@@ -126,8 +133,18 @@ Talk about how not all of the results were what we wanted, and discuss issues we
 The figure below shows a few examples of our implementation successfully reconstructing faces. As you can see, the reconstructed images aren’t perfect, but they’re hitting the general face shape and direction, the shape of the mouth, and providing correct colors for the hair, face, and background. The green squares show which sub-images were sampled from the original input image. Note that the upper left corner is also sampled in each of these photos, as that is always the starting point for the model. 
 
             </div>
+            <div class="content-graphic">
+                <figure>
+                    <img src="./resources/faces1.png" width="80%"/>
+                </figure>
+            </div>
             <div class="content-paragraph">
                 To get a better idea about how the image is updating after each sub-image, here’s how the output images of 3 women become more accurate with each sub-image selected:
+            </div>
+            <div class="content-graphic">
+                <figure>
+                    <img src="./resources/faces2.png" width="80%"/>
+                </figure>
             </div>
             <div class="content-paragraph">
                 The quality of these reconstructions for every image improves after each view is selected, suggesting that the network is meaningfully integrating information from separate views into a gestalt  representation which captures the content of the overall image.
