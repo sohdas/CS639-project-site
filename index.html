@@ -24,9 +24,10 @@
             <br/>
             <div class="content-paragraph">
                 <p>
-                    Humans interpret images by looking at a handful of key points, and using that information to both “fill in” the rest of the image and to direct where they look next. Take this image for example, and notice how it directs (and predicts) your trained flow of vision:
+                    Humans interpret images by looking at a handful of key views, using that information to infer the contents of the entire image and to plan where to look next. Take the following image as an example. Take a look at the image and note the order in which you process it’s contents:
                 </p>
             </div>
+
             <div class="content-graphic">
                 <figure>
                     <img src="./resources/readthis.png" width="70%"/>
@@ -34,32 +35,25 @@
             </div>
 
             <div class="content-paragraph">
-                The largest text grabs our attention right off the bat, and from there we follow the standard top-to-bottom policy that we’re accustomed to. After we read the lowest line of text, the flow stops and we reassess the image to see if there’s anything else important that we missed. Seeing the top line that we had previously skipped over, we read that text last, and then determine that all information on this photo has been analyzed. 
-
-Another slightly “busier” example on how one group of points determines the next viewpoint can be seen in this articleexample from Business Insider (link). The two similar images shown below are overlaid with a heat map representing the areas humans are spending time looking at, red being the areas that the test subjects looked at the most.
-            </div>
-            <div class="content-graphic">
-                <figure>
-                    <img src="./resources/eyetracking.png" width="70%"/>
-                </figure>
+                Note how you read each of the captions (hopefully) in a predictable order. The largest text draws our attention initially followed by the two captions below it. This is because our knowledge of how to read (top-bottom, left-right) informs the order in which we look at the captions. Finally, we read the lowest line of text because after reassessing the image we realize that we missed the smallest caption at the top.
             </div>
             <div class="content-paragraph">
-                From a sales point of view, the left image is a better version of the ad. In that version, it is shown that people spend more time looking at the actual product in that image, rather that the woman. This is because as people look at the woman's face in the left image, they see that eyes are directed at something else within the frame of the image. This directs the person to next look in the same direction as the woman is out of curiosity. In the right image however, the woman’s eyes are staring directly back at the viewer rather than staying within the photo, breaking that natural flow to the product. 
-            </div>
-            <div class="content-paragraph">
-                Humans also interpret images differently given different identification tasks. In a study done by ___, they had one subject perform different three-minute tasks on the same image while tracking eye movementtheir eye movement was tracked. They were first given three minutes to look at the photo with no tasks given to them (1). The remaining tracking shown is when the subject was asked to (2) estimate the material circumstances of the family; (3) give the ages of the people; (4) surmise what the family had been doing before the arrival of the "unexpected visitor;" (5) remember the clothes worn by the people; (6) remember the position of the people and objects in the room; (7) estimate how long the "unexpected visitor" had been away from the family.  ( Yarbus 1967). Shown in the eye movement diagrams below, the subjects’ eyes moved to different parts of the image depending on what task they were given. Even when the subject was allowed to look freely at the image with no task in mind, we can see that the subject still didn’t look at every position of the image. Instead, they focused on the main objects in the image, and let their brain “fill in” the remaining portions. 
+                There is an abundance of psychological studies which have described in detail how we choose where to look at scenes presented to us. In a seminal study conducted by Yarbis et al, researchers asked study participants to perform different three-minute tasks on the same image while tracking eye movement (see image below). They were first given three minutes to look at the photo with no tasks given to them (1). The remaining patterns of saccades are associated with tasks when the participants were asked to (2) estimate the material circumstances of the family; (3) give the ages of the people; (4) surmise what the family had been doing before the arrival of the "unexpected visitor;" (5) remember the clothes worn by the people; (6) remember the position of the people and objects in the room; (7) estimate how long the "unexpected visitor" had been away from the family. (Yarbus, 1967) 
             </div>
 
             <div class="content-graphic">
                 <figure>
-                    <img src="./resources/vision.png" width="40%"/>
+                    <img src="./resources/vision.png" width="70%"/>
                 </figure>
             </div>
 
             <div class="content-paragraph">
-                These studies exemplify how humans handle image analysis. For our semester project, we wanted to devise a way for a computer to learn a “look-around policy” similar to human image analyses which could perform small identification tasks, as well as handle image reconstruction, from a limited sub-view of the original image.We were interested to see how this type of policy would work in computer, and wanted to analyze the accuracy and speed of this method compared to other task-based policies such as “question-answering” policy.
-Question-Answering policy works by generating spatial maps highlighting image regions relevant to answering the question (<a href="https://arxiv.org/abs/1606.00061">https://arxiv.org/abs/1606.00061</a>). Examples of this type of method is shown in the images below:
+                From this image it is evident that how the participants moved their eyes around the scenes depended very strongly on what the given task goals are. Furthermore, even when the participants were allowed to look freely at the image (1), we can see that the participants selected views still follow predictable patterns associated with the structure of the image. This sequential nature of view selection in human vision seems to underlay much of our ability to describe what we see, answer complex questions about scenes, reason about the contents of images, and more. Until recently, such tasks were thought to only be possible for humans, but over the past 5 years, an abundance of deep neural network architectures have been proposed which are able to perform these tasks very well. 
             </div>
+            <div class="content-paragraph">
+                Network architectures and training paradigms have been proposed which are able to perform complex sequential image processing tasks like visual question answering (VQA), image captioning, visual reasoning, and more.  Current models trained to perform these types of tasks typically leverage convolutional encoder components for image processing and recurrent components for text processing and generation. To give you a sense of how this style of network functions, we’ve provided an example image depicting how a VQA processes images. (Anderson et al., 2018) 
+            </div>
+
             <div class="content-graphic">
                 <figure>
                     <img src="./resources/question_answering.png" width="80%"/>
@@ -67,102 +61,138 @@ Question-Answering policy works by generating spatial maps highlighting image re
             </div>
 
             <div class="content-paragraph">
-                As you can see, this approach requires a map to be generated over the entire image, which is not computationally efficient. To produce similar results while improving the speed and memory usage, we decided to train a “look-around” policy that follows the same general flow that humans do when performing similar image analysis tasks, where only a subset of the original image must be analyzed.
-Unlike computers, humans are not able to process an image pixel-by-pixel, and even if they were, it wouldn’t be nearly as efficient. Instead, humans interpret images by looking at a handful of key points, and using that information to both “fill in” the rest of the image and to direct where they look next. Take this image for example, and notice how it directs (and predicts) your trained flow of vision:
+                In the above image, the top row depicts the input images, the text below it describes the questions the model is tasked to answer, and the subsequent rows depict salience maps of which regions of the image the network attended to at each step when generating its answer. It’s important to emphasize how these models encode the entire contents of input images while learning to sequentially attend to different elements of these encodings. While this allows these networks to perform exceptionally well -- and often state-of-the-art in their respective areas -- there are also several drawbacks to using this style of network. For one, these networks are probably not well suited to use as candidate process models of human sequential perception given that they encode the entire contents of their input images; humans, on the other hand, instead learn spatial attention over the regions at which they look. Furthermore, these networks are computationally expensive to apply to very large images given that they must learn to encode these images with a convolutional section which sufficiently reduces the scope of the sequential attention. This particular limitation makes these networks ill suited for embedded robotics applications with high resolution sensors and limited computational resources.
+            </div>
+            <div class="content-paragraph">
+                Such limitations have motivated some researchers to instead construct reinforcement learning models which are trained to sequentially select subregions of large input images. These models are more efficient than the previously mentioned approach because they do not need to encode the contents of the entire image. These models were first described by Ramakrishnan et al (2019) in which they implement such a sequential model to learn “look-around” policies which generalize well across tasks. Furthermore, these networks process images in a way much more similar to humans, thus making them better process models for human active perception. Shown below is a concrete example of how these networks process images:
+            </div>
+            
+            <div class="content-graphic">
+                <figure>
+                    <img src="./resources/origresults.png" width="80%"/>
+                </figure>
+            </div>
+
+            <div class="content-paragraph">
+                Here, the left most column shows the ground truth images which the network must process, the middle column shows the views selected by the agent, and the final columns represent the networks best as to what the original images looked like. This research inspired the project our group worked on this semester where our goal was to learn about these models by implementing them from scratch, applying them in a novel context, and then evaluating how the networks behaved when trained to perform different tasks.
             </div>
 
             <!-- Approach -->
             <h3 class="content-header">Approach</h3>
             <br/>
-            <div class="content-paragraph">
-                We began by looking for any existing research following this type of flow, and found “Emergence of Exploratory Look-Around Behaviors through Active Observation Completion” by Ramakrishnan et al (**SOURCE). This paper implements a similar look-around policy to reconstruct 360 degree landscape images based off of a handful of small sub-images. 
-            </div>
+            
             <div class="content-graphic">
                 <figure>
-                    <img src="./resources/origresults.png" width="90%"/>
+                    <img src="./resources/dataset.png" width="70%"/>
                 </figure>
             </div>
-            <div class="content-paragraph">
-                Their paper focused solely on image reconstruction without delving into talk-solving, but was a perfect starting point for grasping how this policy should be implemented. We initially planned to download and “tweak” their code to match our own dataset and goals, but we soon discovered that this repository was poorly documented and that their code was not compatible with our project goals. This was mainly due to their focus on multi-view and panoramic datasets, where we were planning on using human faces. We instead used this data set as more of a “rough outline”, and learned what we could about how they implemented their image reconstruction policy to influence our own policy construction.
-            </div>
-            <div class="content-paragraph">
-                We chose a large dataset of celebrity faces. We determined that this would be the perfect dataset for our project for a number of reasons. Faces, we determined, would be relatively simple to train on because of the number of similarities across each picture. Every face will have the same general shape, 2 eyes, a nose, and a mouth. In the landscape reconstruction study, the dataset proved to be difficult to train on, partly due to the lack of consistency across each photo. They had to go through a number of additional steps for the training algorithm to produce accurate results. To avoid that trouble, we chose a dataset that has a number of similarities across each image, but still has noticeable variation face-to-face. Additionally, there are many simple tasks that can be determined by looking at a face alone (i.e. eye color, smiling face vs frowning face, necklace vs no necklace), and this data set was very easy to use since it was publicly available and easily accessible.
-            </div>
-            <div class="content-paragraph">
-                We decided to tackle the reconstruction task first, since the study by Ramakrishnan et al. gave us a general idea of how to implement that policy, and then move onto the task-solving policy second. If we had additional time after completing those two steps we planned to run both at once (reconstruction plus a task) and see how that affected the output. 
-            </div>
 
-            <!-- Implementation -->
-            <h3 class="content-header">Implementation</h3>
+            <div class="content-paragraph">
+                Starting the project, we initially planned to download and “tweak” their code to match our own dataset and goals, but we soon discovered that this repository was poorly documented and that their code was not compatible with our project focus. This was mainly due to their emphasis on multi-view and panoramic datasets, where we were planning on using a human face dataset. We instead used this repository to help guide our implementation (specifically, making use of their policy gradient loss implementation and the Agent class structure). Using this as a rough outline of our project, we implemented our policy network, data pipeline, and training/testing pipelines from scratch. For our dataset, we chose to use the CelebAMask-HQ dataset given that it is a large dataset of high resolution images with categorical labels which we could later use for our experiments with the multi-task network. We decided to tackle the reconstruction task first and then move onto the multi-task policy later.
+            </div>
+            
+            <!-- Implementation of R. Network -->
+            <h3 class="content-header">Implementation of Reconstruction Network</h3>
             <br/>
-            <div class="content-paragraph">
-                Our implementation used Convolutional Neural Networks along with fully connected network layers to train our classifier, so to understand the process our classifier goes through you must first understand how these processes work.
-<b>Fully Connected (FC) Layers</b> of a neural network take an aggregated array of data and forms classifications from it using weights. When a layer is fully connected, that means that every node of the original array is connected to every node of the “classification” array. 
-A <b>Convolutional Neural Network (CNN)</b> is a Deep Learning algorithm which can take in an input image, assign importance (learnable weights and biases) to various aspects/objects in the image and be able to differentiate one from the other (source)”. Shown below is a simplified version of a CNN.
-            </div>
-            <div class="content-graphic">
-                <figure>
-                    <img src="./resources/cnn.png" width="90%"/>
-                </figure>
-            </div>
-            <div class="content-paragraph">
-                This example shows an input image going through a number of convolution and pooling steps in order to represent the large photo as a much smaller matrix of learned features. This matrix is then flattened to an array, and then a fully connected layer is applied to get an array with each node corresponding to a different quality such as healthy, alarm, or danger. We used CNNs for their ability to condense a sub-image into a vector of qualitative attributes.
 
-
-
-                Shown below is the custom model architecture used in our implementation:
-                
-            </div>
             <div class="content-graphic">
                 <figure>
                     <img src="./resources/architecture.png" width="70%"/>
                 </figure>
             </div>
-            <div class="content-paragraph">
-                Given a 512x512 image, a 32x32 subsection (represented by the green square) is selected and read into memory. The fully-connected CNN of this subsection is stored as a “view encoding” vector of individual attributes. This is combined with the proprioceptive input encoding, which stores information about the location of the sub image in relation to the input image as a whole. These two vectors are combined into one using concatenation, and then a fully connected layer updates the 256x1 vector we reference as the Gestalt Encoding, gestalt meaning “an organized whole that is perceived as more than the sum of its parts”.  Finally, the gestalt encoding creates both an output image (an estimate of what it believes the face looks like), and a vector of “action probabilities” which selects the next subimage to go through this sequence. The gestalt encoding as well as the action probability vectors are what is being trained, so they don’t completely refresh during each call. Instead, every run through this sequence slightly updates each of them depending on the accuracy of the final output image. 
 
+            <div class="content-paragraph">
+                We task this first reconstruction network to reconstruct the input images using only information gained from the selected sub views from the larger images. Here’s a quick description of how our network works: 
+                <br/>
+                <ol>
+                    <li>Model is presented with an image.</li>
+                    <li>The convolutional image encoding pathway encodes a (32x32) pixel subregion of the larger (512x512) image. On the first time step we fix that region to be the one in the upper left.</li>
+                    <li>Simultaneously, the proprioceptive pathway encodes a one-hot encoded vector vector describing the location of the selected subregion.</li> 
+                    <li>The image and proprioceptive encodings are concatenated and then integrated into what we call a “gestalt” representation of the agent's current representation properties of the entire image. (“Gestalt (adj.): an organized whole that is perceived as more than the sum of its parts.”) This “gestalt” representation is integrated over time using an LSTM layer.</li> 
+                    <li>From the gestalt representation, the network then attempts to reconstruct the original image while also generating an action probability vector.</li>
+                    <li>An action is selected using these action probabilities in a manner which tends to select regions with the highest probability while also leaving room to explore the action space by choosing actions with small probabilities.</li>
+                    <li>On the next step, the network is provided with input associated with this selected action and new reconstructions/action probabilities are generated.</li>
+                    <li>This process is then repeated for N iterations. (We often chose 10 for practical reasons).</li>
+                    
+                </ol>
+            </div>
+            
+            <div class="content-paragraph">
+                The convolutional decoder is trained at each iteration of view selection with the reconstruction error for that time step. This helps the large image decoder to converge more rapidly than backpropagating only after all views are selected. Similarly, the action probability generating section of the network is trained using a policy gradient loss derived from rewards obtained at each iteration of view selection and associated with those iterations reconstruction losses.
             </div>
 
+            <!-- Implementation of Task Network -->
+            <h3 class="content-header">Implementation of Task Network</h3>
+            <br/>
+
+            <div class="content-paragraph">
+                Towards the end of the semester, we trained an additional network which was similar to the reconstruction network. Here, instead of reconstructing the image, at each timestep, we train the network to identify categorical features represented in the images. For instance, the network may be tasked with identifying whether the individual depicted in the image has earrings, is smiling, or is bald. The network architecture used was almost identical to the reconstruction network, but had a fully connected output layer in place of a convolutional decoder. Unfortunately, due to a combination of factors including the non-stationarity of action probabilities during training, and the long time it took to train each network variant, and a group member contracting COVID-19, our efforts to train a functional task network were ultimately unsuccessful.
+            </div>
+            <div class="content-graphic">
+                <figure>
+                    <img src="./resources/architecture2.png" width="70%"/>
+                </figure>
+            </div>
+          
             <!-- Results -->
             <h3 class="content-header">Results</h3>
             <br/>
             <div class="content-paragraph">
-                images and gifs of the image reconstruction
-possibly add in images for the task-finding part of it
-Talk about how not all of the results were what we wanted, and discuss issues we had (lead into next section)
-The figure below shows a few examples of our implementation successfully reconstructing faces. As you can see, the reconstructed images aren’t perfect, but they’re hitting the general face shape and direction, the shape of the mouth, and providing correct colors for the hair, face, and background. The green squares show which sub-images were sampled from the original input image. Note that the upper left corner is also sampled in each of these photos, as that is always the starting point for the model. 
-
+                These are a few examples of the output produced by the reconstruction network. The green squares show which subregions of the images were analyzed at each time step, and subsequently you can see the image reconstruction improve at each of these time steps.
             </div>
+            
+            <div class="content-graphic">
+                <figure>
+                    <img src="./resources/face1.gif" width="80%"/>
+                    <img src="./resources/face2.gif" width="80%"/>
+                    <img src="./resources/face3.gif" width="80%"/>
+                    <img src="./resources/face4.gif" width="80%"/>
+                    <img src="./resources/face5.gif" width="80%"/>
+                    <img src="./resources/face6.gif" width="80%"/>
+                </figure>
+            </div>
+            <div class="content-paragraph">
+                Our model was able to learn important factors of variation, most commonly succeeding at features like head angle, background color, and hair color. Some example images and reconstructions depicting how the network succeeded at representing these features are given below:
+            </div>
+            
             <div class="content-graphic">
                 <figure>
                     <img src="./resources/faces1.png" width="80%"/>
                 </figure>
             </div>
+
             <div class="content-paragraph">
-                To get a better idea about how the image is updating after each sub-image, here’s how the output images of 3 women become more accurate with each sub-image selected:
+                The reconstruction of the woman in the top left image shows the correct head angle, most likely realizing this difference in head angle from the two points that fall along the side of her face. The woman in the top left also has the correct face shape as the subregions selected fell along the side of her face.
             </div>
+            <div class="content-paragraph">
+                This next figure shows reconstructed images of the same three women at different time steps, a broken-down version of the gifs shown above. The quality of these reconstructions for every image improves after each view is selected, suggesting that the network is meaningfully integrating information from separate views into a gestalt  representation which captures the content of the overall image. In the center column of the figure, you can see hair color, skin color, and face angle become more accurate as each sub-view is selected. One clear example of a single sub-image that has an impact on the reconstruction as a whole can be seen in the third column of the figure, third row down. Here you can see that the new selected sub-image includes part of the woman's forehead and part of her bangs. The corresponding reconstructed image now shows bangs in that area!
+            </div>
+
             <div class="content-graphic">
                 <figure>
                     <img src="./resources/faces2.png" width="80%"/>
                 </figure>
             </div>
+
             <div class="content-paragraph">
-                The quality of these reconstructions for every image improves after each view is selected, suggesting that the network is meaningfully integrating information from separate views into a gestalt  representation which captures the content of the overall image.
-
+                As stated before we do not have any results to share from our feature labelling model, as the results produced are not yet accurate. We are experimenting with ways to combat this issue and discuss some of these solutions in the next section.
             </div>
-
+            
             <!-- Problems -->
             <h3 class="content-header">Problems Encountered</h3>
             <br/>
             <div class="content-paragraph">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque suscipit architecto eum eveniet dolorem molestiae voluptates. Temporibus, explicabo ipsam distinctio reiciendis modi, suscipit soluta possimus animi accusantium, enim ab delectus?
+                Our reconstruction model performs fairly well, but it seems to overfit to the “average” face. To counteract this, we hypothesize that switching from pixel-wise mean squared error to inception loss may help reconstructions to be more semantically consistent with the target image, and would help the model to emphasize feature similarity rather than pixel similarity. Pixelwise mean squared error is simpler to implement, but doesn’t perform as well in the long run because it can easily fall into issues such as putting emphasis on semantically uninteresting but visually distinct aspects of the image (e.g. background variation).
+            </div>
+            <div class="content-paragraph">
+                Our reconstruction model also seems to overexploit rewarding views later in training, falling into local maxima in the reward landscape. One solution to this issue is to use explicit supervision early on in training. This might mean adding an additional loss term which helps shape the action probabilities to be closer to the ground truth “best” action sequences under a globally optimal policy where the optimal policy is determined by training an end to end (32x32)=>(512x512) view->image decoder to find which views which are most informative and useful for reconstructing the contents of the whole image. As stated before, our Feature labelling model is not yet able to produce accurate results. One theory that we have as to why this is not working is that the action probabilities are non-stationary throughout training, making it difficult for the network to learn the spatial location of features informative to different labels.
             </div>
 
             <!-- Suggestions -->
-            <h3 class="content-header">Suggestions for Future Research</h3>
+            <h3 class="content-header">Future Research Using This Model</h3>
             <br/>
             <div class="content-paragraph">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque suscipit architecto eum eveniet dolorem molestiae voluptates. Temporibus, explicabo ipsam distinctio reiciendis modi, suscipit soluta possimus animi accusantium, enim ab delectus?
+                Once our models (both reconstruction and multi-task networks) are working consistently, there are numerous applications we would like to explore. As mentioned in our initial motivation, we would like to train on more difficult tasks and combinations of tasks. It would also be interesting to run both the reconstruction task and the feature labelling tasks concurrently to investigate how the networks manage to balance multiple goals. Will the model prioritize one over the other, will they equally fall short? We are additionally interested in running this training policy on data sets that aren’t as straightforward as faces to see if it would still be able to reconstruct images accurately and perform tasks. Further interesting emerge here: will the network be able to encode and learn the spatial co-occurrence of features across image domains, or will this make the training process more unstable and slow? Ramakrishnan provides some initial results suggesting that such policies generalize well across the task that they examined, but they did not systematically evaluate how these policies may vary across image domains with different features and statistics. Clearly, there are many interesting extensions to this project that we hope to pursue in the future.
             </div>
 
             <!-- Citations -->
@@ -174,6 +204,13 @@ The figure below shows a few examples of our implementation successfully reconst
                         Ramakrishnan, S. K., Jayaraman, D., & Grauman, K. (2019). Emergence of exploratory look-
                         around behaviors through active observation completion. Science Robotics, 4(30).
                         &nbsp; [doi:10.1126/scirobotics.aaw6326]
+                    </li>
+                    <li>
+                        Yarbus, A. L. (1967). Eye movements and vision. New York: Plenum Press.
+                    </li>
+                    <li>
+                        Anderson, P., He, X., Buehler, C., Teney, D., Johnson, M., Gould, S., & Zhang, L. (2018). Bottom-Up and Top-Down Attention for Image Captioning and Visual Question Answering. 2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition.
+                        &nbsp; [doi:10.1109/cvpr.2018.00636]
                     </li>
                 </ul>
             </div>
