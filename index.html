@@ -105,14 +105,14 @@
                 We task this first reconstruction network to reconstruct the input images using only information gained from the selected sub views from the larger images. Here’s a quick description of how our network works: 
                 <br/>
                 <ol>
-                    <li>Model is presented with an image.</li>
-                    <li>The convolutional image encoding pathway encodes a (32x32) pixel subregion of the larger (512x512) image. On the first time step we fix that region to be the one in the upper left.</li>
-                    <li>Simultaneously, the proprioceptive pathway encodes a one-hot encoded vector vector describing the location of the selected subregion.</li> 
-                    <li>The image and proprioceptive encodings are concatenated and then integrated into what we call a “gestalt” representation of the agent's current representation properties of the entire image. (“Gestalt (adj.): an organized whole that is perceived as more than the sum of its parts.”) This “gestalt” representation is integrated over time using an LSTM layer.</li> 
-                    <li>From the gestalt representation, the network then attempts to reconstruct the original image while also generating an action probability vector.</li>
-                    <li>An action is selected using these action probabilities in a manner which tends to select regions with the highest probability while also leaving room to explore the action space by choosing actions with small probabilities.</li>
-                    <li>On the next step, the network is provided with input associated with this selected action and new reconstructions/action probabilities are generated.</li>
-                    <li>This process is then repeated for N iterations. (We often chose 10 for practical reasons).</li>
+                    <li class="content-ol-list">Model is presented with an image.</li>
+                    <li class="content-ol-list">The convolutional image encoding pathway encodes a (32x32) pixel subregion of the larger (512x512) image. On the first time step we fix that region to be the one in the upper left.</li>
+                    <li class="content-ol-list">Simultaneously, the proprioceptive pathway encodes a one-hot encoded vector vector describing the location of the selected subregion.</li> 
+                    <li class="content-ol-list">The image and proprioceptive encodings are concatenated and then integrated into what we call a “gestalt” representation of the agent's current representation properties of the entire image. (“Gestalt (adj.): an organized whole that is perceived as more than the sum of its parts.”) This “gestalt” representation is integrated over time using an LSTM layer.</li> 
+                    <li class="content-ol-list">From the gestalt representation, the network then attempts to reconstruct the original image while also generating an action probability vector.</li>
+                    <li class="content-ol-list">An action is selected using these action probabilities in a manner which tends to select regions with the highest probability while also leaving room to explore the action space by choosing actions with small probabilities.</li>
+                    <li class="content-ol-list">On the next step, the network is provided with input associated with this selected action and new reconstructions/action probabilities are generated.</li>
+                    <li class="content-ol-list">This process is then repeated for N iterations. (We often chose 10 for practical reasons).</li>
                     
                 </ol>
             </div>

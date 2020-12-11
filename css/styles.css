@@ -33,6 +33,11 @@ html {
     text-indent: 2em;
 }
 
+.content-ol-list {
+    text-indent: 0em;
+    padding-left: 15px;
+}
+
 .content-header {
     text-align: left;
     font-size: 36px;
